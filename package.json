@@ -10,6 +10,7 @@
         "components",
         "api-documentation"
     ],
+    "type": "module",   
     "scripts": {
         "build": "turbo run build",
         "build-force": "pnpm clean && turbo run build --force",
@@ -52,6 +53,7 @@
         "run-script-os": "^1.1.6",
         "turbo": "1.10.16",
         "typescript": "^5.4.5"
+        "youtube-transcript": "^1.2.1"
     },
     "pnpm": {
         "onlyBuiltDependencies": [
