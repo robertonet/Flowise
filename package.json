@@ -10,7 +10,6 @@
         "components",
         "api-documentation"
     ],
-    "type": "module",   
     "scripts": {
         "build": "turbo run build",
         "build-force": "pnpm clean && turbo run build --force",
