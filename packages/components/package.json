@@ -10,7 +10,8 @@
         "dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"pnpm dev:gulp\"",
         "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "clean": "rimraf dist",
-        "nuke": "rimraf dist node_modules .turbo"
+        "nuke": "rimraf dist node_modules .turbo",
+        "postinstall": "npm rebuild wordnet-db && npm rebuild wordpos"
     },
     "keywords": [],
     "homepage": "https://flowiseai.com",
