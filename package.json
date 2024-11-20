@@ -23,7 +23,7 @@
         "lint": "eslint \"**/*.{js,jsx,ts,tsx,json,md}\"",
         "lint-fix": "pnpm lint --fix",
         "quick": "pretty-quick --staged",
-        "postinstall": "husky install && npm rebuild wordpos && npm rebuild wordnet-db",
+        "postinstall": "husky install",
         "migration:create": "pnpm typeorm migration:create"
     },
     "lint-staged": {
