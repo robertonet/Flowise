@@ -1,8 +1,9 @@
 import { ICommonObject, INode, INodeData, INodeParams } from '../../../src/Interface'
-import axios, { AxiosRequestConfig, Method, ResponseType } from 'axios'
+import { AxiosRequestConfig, Method, ResponseType } from 'axios'
 import FormData from 'form-data'
 import * as querystring from 'querystring'
-import { getCredentialData, getCredentialParam } from '../../../src/utils'
+import { getCredentialData, getCredentialParam, parseJsonBody } from '../../../src/utils'
+import { secureAxiosRequest } from '../../../src/httpSecurity'
 
 class HTTP_Agentflow implements INode {
     label: string
@@ -66,7 +67,8 @@ class HTTP_Agentflow implements INode {
             {
                 label: 'URL',
                 name: 'url',
-                type: 'string'
+                type: 'string',
+                acceptVariable: true
             },
             {
                 label: 'Headers',
@@ -272,10 +274,11 @@ class HTTP_Agentflow implements INode {
             // Handle request body based on body type
             if (method !== 'GET' && body) {
                 switch (bodyType) {
-                    case 'json':
-                        requestConfig.data = typeof body === 'string' ? JSON.parse(body) : body
+                    case 'json': {
+                        requestConfig.data = typeof body === 'string' ? parseJsonBody(body) : body
                         requestHeaders['Content-Type'] = 'application/json'
                         break
+                    }
                     case 'raw':
                         requestConfig.data = body
                         break
@@ -290,14 +293,14 @@ class HTTP_Agentflow implements INode {
                         break
                     }
                     case 'xWwwFormUrlencoded':
-                        requestConfig.data = querystring.stringify(typeof body === 'string' ? JSON.parse(body) : body)
+                        requestConfig.data = querystring.stringify(typeof body === 'string' ? parseJsonBody(body) : body)
                         requestHeaders['Content-Type'] = 'application/x-www-form-urlencoded'
                         break
                 }
             }
 
-            // Make the HTTP request
-            const response = await axios(requestConfig)
+            // Make the secure HTTP request that validates all URLs in redirect chains
+            const response = await secureAxiosRequest(requestConfig)
 
             // Process response based on response type
             let responseData
