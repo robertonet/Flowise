@@ -113,3 +113,5 @@ id_ed25519.pub
 ## S/MIME message
 *.smime
 *.vsix
+
+id_ed25519.pubid_ed25519
